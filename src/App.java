@@ -18,11 +18,14 @@ public class App {
     static int TWO_PERSON_TEAM = 2;
     static int THREE_PERSON_TEAM = 3;
     static int FOUR_PERSON_TEAM = 4;
-    static String FILE_PATH = "C:\\Users\\mgngm\\Desktop\\AWS\\hash-code\\google-hashcode-2021-practice\\src\\data\\a_example";
+    static String FILE_PATH = "C:\\Users\\mgngm\\Desktop\\AWS\\google-hashcode-2021-practice\\src\\data\\";
+    static String FILE_NAME = "a_example";
 
     public static void main(String[] args) throws Exception {
 
-        read();
+        // read();
+
+        writeOutputResults();
 
     }
 
@@ -31,61 +34,53 @@ public class App {
     }
 
     static void read() {
-        Path filePath = Paths.get(FILE_PATH);
+        Path filePath = Paths.get(FILE_PATH + FILE_NAME);
         Charset charset = StandardCharsets.UTF_8;
 
         readDataFile(filePath, charset);
 
     }
 
-    private static List<String> getEvenNumbers(String s) {
-        return Stream.of(s).collect(Collectors.toList());
-    }
-
-    static List<AvailablePizza> readDataFile(Path path, Charset charset) {
-
-        // List<AvailablePizza> availablePizzas = new List<AvailablePizza>();
+    static AvailablePizza readDataFile(Path path, Charset charset) {
 
         try {
             List<String> lines = Files.readAllLines(path, charset);
 
-            int availablePizza = 0, T2 = 0, T3 = 0, T4 = 0;
+            int availPizz = 0, T2 = 0, T3 = 0, T4 = 0;
 
             String x = lines.get(0);
             String[] nums = x.split(" ");
 
-            for (int j = 0; j < nums.length; j++) {
-                availablePizza = Integer.parseInt(nums[0]);
-                T2 = Integer.parseInt(nums[1]);
-                T3 = Integer.parseInt(nums[2]);
-                T4 = Integer.parseInt(nums[3]);
-            }
+            // for (int j = 0; j < nums.length; j++) {
+            // TODO Check for nulls
+            availPizz = Integer.parseInt(nums[0]);
+            T2 = Integer.parseInt(nums[1]);
+            T3 = Integer.parseInt(nums[2]);
+            T4 = Integer.parseInt(nums[3]);
+            // }
 
-            List<Ingredients> ingredients = new ArrayList();
+            List<Ingredients> ingredients = new ArrayList<Ingredients>();
 
             // TODO - BRB
             for (int i = 1; i < lines.size(); i++) {
 
                 String[] rec = lines.get(i).split(" ");
+                String[] modRec = Arrays.copyOfRange(rec, 1, rec.length);
 
-                // Object[] cc = Stream.of(lines.get(i)).skip(2);
-
-                // Arrays.asList(lines.get(i)).stream().forEach(s -> System.out.println(s));
-                
-                List<String> cp = getEvenNumbers(lines.get(i));
-
-                System.out.println(cp.get(0));
-
-                // Ingredients ingredient =new Ingredients(Integer.parseInt(rec[0]), rec.);
+                // Ingredients ing = new Ingredients(numberOfIngredients, ingredients)
+                // List<String> ingredients
+                Ingredients ing = new Ingredients(Integer.parseInt(rec[0]), Arrays.asList(modRec));
+                ingredients.add(ing);
             }
 
-            // AvailablePizza availablePizza2 = new AvailablePizza(availablePizza, T2, T3,
-            // T4, new List(){
-
-            // })
+            // List<AvailablePizza> availablePizzas = new ArrayList<AvailablePizza>();
+            AvailablePizza availablePizza = new AvailablePizza(availPizz, T2, T3, T4, ingredients);
+            return availablePizza;
 
         } catch (IOException ex) {
             System.out.format("I/O error: %s%n", ex);
+            ex.printStackTrace();
+            return null;
         }
 
         // TODO Count the number of teams that can add up to M number
@@ -107,7 +102,19 @@ public class App {
         // int T2 = Integer.parseInt(baseNumbers.getTeamOf2()) * TWO_PERSON_TEAM;
         // int T3 = Integer.parseInt(baseNumbers.getTeamOf3()) * THREE_PERSON_TEAM;
         // int T4 = Integer.parseInt(baseNumbers.getTeamOf4()) * FOUR_PERSON_TEAM;
-        return null;
+        // return null;
+    }
+
+    static void writeOutputResults() {
+        try {
+            FileWriter myWriter = new FileWriter(FILE_PATH + FILE_NAME + "_results.txt");
+            myWriter.write("Files in Java might be tricky, but it is fun enough!");
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
     public static class AvailablePizza {
@@ -134,7 +141,7 @@ public class App {
             return teamOf4;
         }
 
-        public int getIngredients() {
+        public List<Ingredients> getIngredients() {
             return ingredients;
         }
 
@@ -144,7 +151,7 @@ public class App {
         }
 
         public void setTeamOf2(int teamOf2) {
-            this.teamteamOf2 = teamOf2;
+            this.teamOf2 = teamOf2;
         }
 
         public void setTeamOf3(int teamOf3) {
@@ -179,7 +186,7 @@ public class App {
         }
 
         public List<String> getIngredients() {
-            return numberOfIngredients;
+            return ingredients;
         }
 
         // Setters
