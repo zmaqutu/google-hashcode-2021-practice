@@ -17,11 +17,18 @@ public class PizzaSolution {
 
         File file = new File(fileName);
 
-		Scanner scan = new Scanner(System.in);
-
 		try
 		{
 			Scanner inputStream = new Scanner(file);
+
+            String order_description = inputStream.nextLine();
+            String [] order_details = order_description.split(" ");
+
+            //these are the pizza order details 
+            int number_of_pizzas = Integer.parseInt(order_details[0]);
+            int teams_of_two = Integer.parseInt(order_details[1]);
+            int teams_of_three = Integer.parseInt(order_details[2]);
+            int teams_of_four = Integer.parseInt(order_details[3]);
 
 			while(inputStream.hasNext())
 			{
@@ -37,7 +44,7 @@ public class PizzaSolution {
 		{
 			e.printStackTrace();
 		}
-        System.out.println(extracted_data[1]);
+        System.out.println(extracted_data[0]);
     }
     
 }
