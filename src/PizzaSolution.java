@@ -6,14 +6,20 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedWriter;
+import java.util.Arrays;
 
 public class PizzaSolution {
 
-    public static String [] extracted_data = new String[300];
+    public static Pizza [] pizzas = new Pizza[500];
 
     public static void main(String[] args) {
         int i = 0;
-        String fileName = "../data/a_example";
+        String fileName = "../data/b_little_bit_of_everything.in";
+
+        int number_of_pizzas;
+        int teams_of_two;
+        int teams_of_three;
+        int teams_of_four;
 
         File file = new File(fileName);
 
@@ -25,16 +31,20 @@ public class PizzaSolution {
             String [] order_details = order_description.split(" ");
 
             //these are the pizza order details 
-            int number_of_pizzas = Integer.parseInt(order_details[0]);
-            int teams_of_two = Integer.parseInt(order_details[1]);
-            int teams_of_three = Integer.parseInt(order_details[2]);
-            int teams_of_four = Integer.parseInt(order_details[3]);
+            number_of_pizzas = Integer.parseInt(order_details[0]);
+            teams_of_two = Integer.parseInt(order_details[1]);
+            teams_of_three = Integer.parseInt(order_details[2]);
+            teams_of_four = Integer.parseInt(order_details[3]);
 
 			while(inputStream.hasNext())
 			{
 				String data = inputStream.nextLine();
 
-				extracted_data[i] = data;
+                String [] pizza_details = data.split(" ",2);
+
+                int numberOfIngredients = Integer.parseInt(pizza_details[0]);
+                String ingredients = pizza_details[1];
+                pizzas[i] = new Pizza(i, numberOfIngredients, ingredients); 
 		
 				i++;
 			}
@@ -44,7 +54,11 @@ public class PizzaSolution {
 		{
 			e.printStackTrace();
 		}
-        System.out.println(extracted_data[0]);
+        Arrays.sort(pizzas);
+
+        for(int k = 0; k < pizzas.length;k++){
+            System.out.println(pizzas[k]);
+        }
     }
     
 }
