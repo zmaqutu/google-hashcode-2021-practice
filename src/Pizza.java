@@ -6,12 +6,14 @@ public class Pizza implements Comparable<Pizza> {
     int pizza_number;
     int no_of_ingridients;
     String ingredients;
+    String [] arrayIngredients; 
 
     Pizza(int pizza_number, int no_of_ingridients, String ingredients){
         super();
         this.pizza_number = pizza_number;
         this.no_of_ingridients = no_of_ingridients;
         this.ingredients = ingredients;
+        this.arrayIngredients = ingredients.split(" ");
     }
 
     int getPizzaNumber(){
@@ -32,6 +34,10 @@ public class Pizza implements Comparable<Pizza> {
 
         int compareNumberOfIngredients = ( (Pizza) comparePizza).getNumberOfIngredients();
 
+        //most ingredients to least ingredients
         return compareNumberOfIngredients - this.no_of_ingridients;
+
+        //least ingredients to most ingredients
+        //return this.no_of_ingridients - compareNumberOfIngredients;
     }
 }
